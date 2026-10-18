@@ -1,0 +1,32 @@
+{
+  "mode": "fork",
+  "txs": {
+    "l1_deploy": "0xefade1f93a861465a7384689f295b76c6fae14d8668988943839cb06fbd9968b",
+    "l2_factory_create": "0xc7e55e9bd53fd86f387c50a030ffad40962b2ae6d89a889071e228d88e8ed0f4",
+    "l1_approve": "0x8c344159947981af027ba7164d850ba78a88aa46afa076e7ded5b895a602bb5e",
+    "l1_bridge_deposit": "0xedeb4de77622f882534ce4329214f9eaf97561e2c5ed93759b19f786e83dad32",
+    "l2_relay_mint_simulated": "0xfcb6b8bfdd168d27669d30c5e46c2937ecc1b9243253ffd59ccc05588384e48b",
+    "seed_eth_treasury": "0x020bbe841357c26d61a0da5b891b1b747e1ae5d2ae63380363c4517edec743b8",
+    "seed_eth_user": "0x239c687f013d22672266178f9aea5626f348731ce0215acb77d9d6ca18e71193",
+    "seed_kdu_treasury": "0x08186ceecd392d6f5ddfb5f6aafa27811200add6d9bc38cb15525a0bdf601394",
+    "seed_kdu_user": "0x05c0d149bd2a3cc9ddac3352b4fc13e70728c42c67ea603611a3dc67b8521a7c",
+    "send": "0xc7e6f54e18480f2d9486947e908a4fec59bcf7f7b80bd5a74cd92ddcefd477f6",
+    "tip": "0x52e2318d2b8fd25d1dca0afb0db8bb5be617f9f2fab46154d22e5b0b37fd8335",
+    "pay": "0x80fdff66551c05a2fbb06eec7d1d9c9d93bd49ecf42fada65bf02d2db3c755c7",
+    "payout": "0x4e8d9e3c3240086324049e423efb22ef86d26c75e21de7683103557f305e87d5"
+  },
+  "l1Token": "0x798eab059c2a2e23d9833b25e1d902278e75b401",
+  "l2Token": "0x298B81959a1a9682f9CAB9da75dAaF50AD7C18Ed",
+  "l2BalanceAfterBridge": "1000000",
+  "balances": {
+    "treasury": "499923",
+    "user": "1005",
+    "merchant": "72"
+  },
+  "addresses": {
+    "deployer": "0x6792f9E67e14b136d5d11B3349646E91C03bD1fe",
+    "treasury": "0x6c7c4513761b71B46E8867785859900944aA2d9C",
+    "user": "0x41416B38506dc57E4292E10c11621163c8F2aCEf",
+    "merchant": "0xb387AEef4224b31B2992ECBACb295f00F696e7F0"
+  }
+}
