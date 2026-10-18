@@ -1,0 +1,22 @@
+{
+  "name": "kudoken-wallet",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "esbuild src/kudoken-wallet.js --bundle --minify --format=iife --target=es2020 --outfile=public/kudoken-wallet.js",
+    "e2e": "node scripts/e2e.mjs"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "dependencies": {
+    "esbuild": "^0.28.2",
+    "solc": "^0.8.24",
+    "viem": "^2.57.7"
+  },
+  "devDependencies": {
+    "playwright": "1.56"
+  }
+}

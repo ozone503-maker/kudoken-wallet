@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Kudoken wallet, a little aloha on Base</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌺</text></svg>">
+<style>
+:root{--sand:#f1e8d8;--shell:#fbf7ef;--ink:#10293a;--muted:#5b6670;--fire:#b8381f;--air:#2f8fa3;--earth:#55703f;--comet:#7fd0f2}
+*{box-sizing:border-box}body{margin:0;font-family:"Hanken Grotesk",system-ui,sans-serif;color:var(--ink);background:linear-gradient(180deg,#e8eef1 0,var(--sand) 340px,var(--sand))}
+header{padding:56px 22px 26px;max-width:1080px;margin:auto}
+h1{font-family:"Big Shoulders Stencil","Hanken Grotesk",sans-serif;font-size:clamp(40px,7vw,72px);line-height:.95;margin:0 0 14px}
+h1 span{color:var(--fire)}
+header p{font-size:18px;max-width:640px;color:#1b3a4f;margin:0}
+main{max-width:1080px;margin:auto;padding:10px 22px 60px;display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:26px}
+section h2{font-family:"Big Shoulders Stencil","Hanken Grotesk",sans-serif;font-size:30px;margin:0 0 6px}
+section>p{margin:0 0 14px;color:var(--muted)}
+.mall{background:var(--shell);border-radius:22px;padding:16px;border:1px solid #e7dbc4;margin-bottom:14px}
+.mall b{font-size:18px}.mall small{color:var(--muted)}
+pre{background:var(--ink);color:#e8eef1;padding:16px;border-radius:16px;overflow:auto;font-size:13px}
+.race{display:flex;gap:8px;align-items:center;margin-top:12px;flex-wrap:wrap}
+.race input{flex:1;min-width:180px;padding:10px 12px;border-radius:12px;border:1px solid #d9ccb3;font:inherit}
+.race button{font:inherit;font-weight:700;border:0;border-radius:999px;padding:10px 16px;background:var(--air);color:#fff;cursor:pointer}
+#raceOut,#paidOut{font-size:13px;word-break:break-all;color:var(--muted)}
+footer{max-width:1080px;margin:auto;padding:0 22px 60px}
+</style>
+</head>
+<body>
+<header>
+  <h1>Kudoken wallet, <span>everywhere you hang out</span></h1>
+  <p>One little widget for every Kudoken spot. Hold your KDU, tip a friend, pay at the Fruity Puppy Outlet Mall and collect your Monkey Jockey winnings, all on Base. This page runs on the Base Sepolia test network, so everything here is play money.</p>
+</header>
+<main>
+  <section>
+    <h2>Your wallet</h2>
+    <p>Connect, see your KDU and gas, send to anyone</p>
+    <kudoken-wallet id="w" mode="wallet"></kudoken-wallet>
+  </section>
+  <section>
+    <h2>Tip jar</h2>
+    <p>Drop this on any site to collect tips</p>
+    <kudoken-wallet id="tip" mode="tip" presets="1,5,20" label="Mahalo the artist"></kudoken-wallet>
+  </section>
+  <section>
+    <h2>Fruity Puppy checkout</h2>
+    <div class="mall"><b>Hibiscus aloha shirt</b><br><small>Outlet Mall, Stall 7</small></div>
+    <kudoken-wallet id="pay" mode="checkout" amount="42" order="FP-1001"></kudoken-wallet>
+    <p id="paidOut"></p>
+  </section>
+  <section>
+    <h2>Monkey Jockey winnings</h2>
+    <p>The race treasury pays winners straight to their wallet</p>
+    <kudoken-wallet id="win" mode="winnings"></kudoken-wallet>
+    <div class="race"><input id="winner" placeholder="Winner address 0x…"><button id="race">Run a demo race payout</button></div>
+    <p id="raceOut"></p>
+  </section>
+</main>
+<footer>
+  <h2 style="font-family:'Big Shoulders Stencil',sans-serif">Add it to your site</h2>
+<pre>&lt;script src="https://YOUR-DEPLOY/kudoken-wallet.js" defer&gt;&lt;/script&gt;
+&lt;kudoken-wallet chain="base-sepolia" token="0xTOKEN" mode="tip" to="0xYOU" presets="1,5,20"&gt;&lt;/kudoken-wallet&gt;</pre>
+</footer>
+<script src="config.js"></script>
+<script src="kudoken-wallet.js"></script>
+<script>
+const C = window.KDU_DEMO;
+for (const el of document.querySelectorAll('kudoken-wallet')) {
+  el.setAttribute('chain', C.chain); el.setAttribute('token', C.token);
+  if (C.rpc) el.setAttribute('rpc', C.rpc);
+}
+document.getElementById('tip').setAttribute('to', C.merchant);
+document.getElementById('pay').setAttribute('merchant', C.merchant);
+document.getElementById('win').setAttribute('treasury', C.treasury);
+document.addEventListener('kudoken:paid', (e) => { document.getElementById('paidOut').textContent = 'Order ' + e.detail.order + ' paid, tx ' + e.detail.hash; });
+document.getElementById('race').onclick = async () => {
+  const out = document.getElementById('raceOut'); out.textContent = 'Paying out…';
+  try {
+    const r = await fetch('/api/payout', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ to: document.getElementById('winner').value.trim(), amount: 10, raceId: 'MJ-' + Date.now() }) });
+    const j = await r.json(); out.innerHTML = j.hash ? 'Winner paid 10 KDU, <a href="' + j.explorer + '" target="_blank" rel="noopener">see it on Basescan</a>' : (j.error || 'Something went sideways');
+  } catch (e) { out.textContent = e.message; }
+};
+</script>
+</body>
+</html>
