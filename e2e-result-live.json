@@ -1,0 +1,39 @@
+{
+  "mode": "live",
+  "l1Token": "0x6170297d1d88CD610363ff14963fE0664aFaDe89",
+  "l2Token": "0xA3e077C25d3e2279B1429eDb9F25071674C53b51",
+  "txs": {
+    "l1_deploy": "0x672b3bb88f25823d7486ea53b49b20fae8657a36e8cafafef9796591f714e94d",
+    "l2_factory_create": "0xf7cb61eedab0ca9d84345ec6c4ed06f28f475d131cc49588e2a76c67924b602e",
+    "l1_approve": "0x7c986f421b61e441b98a70840bb461d1870c5860c5b607020486dd9f0b86e57f",
+    "l1_bridge_deposit": "0xf441e1bacc542450f0d85175b97e2bdf251921747b7ce4c2a2c51fb214614794",
+    "l2_bridge_arrival": "0xbdb5ad40cb79f683400611e527d7fd3fd05bfc62bcc49c9be7bcbe7f25f2c262",
+    "l1_eth_deposit": "0x46dd4c6cbe59a26754501c6e414e055bc682908082973772087ae3ca781f4d71",
+    "seed_eth_treasury": "0x3575fe47cc05058f0ae7325659354fe427ec2942981a2fd184ac81328a7e2728",
+    "seed_eth_user": "0xed3a2d1533e3bcb6cae422e1eeb92720fb400bd129be47b5175b66eafa8a9897",
+    "seed_kdu_treasury": "0xf29c97371ae579cc206e36175f502929acdfa75fc6a0f1b2412ed2a9df7c1811",
+    "seed_kdu_user": "0x481d4b5b983c7f0149c078adef7f8465f47e2ce0b9dc407e5540ef5fb1cff4fa",
+    "send": "0x192268a13b28f7e235d2c26022b6da201e536fac1c083a7b23431a9c6b197382",
+    "tip": "0x83b00a1c1e66f7a0076dc9d21e6e743dce4e6c5280e50d5cc89caa39affedffa",
+    "pay": "0xd2010876c20f78df9e5edff1e39808d7ae019f7f1238c5e63bc2568c83ec1ea7",
+    "payout": "0xe7526be9ae36823bc1356feebc69e41dd0867ec37153bd3e08849d4a8a0541d2"
+  },
+  "balances": {
+    "deployer": {
+      "kdu": "499000",
+      "eth": "0.089991372143999528"
+    },
+    "treasury": {
+      "kdu": "499923",
+      "eth": "0.004999791943999904"
+    },
+    "user": {
+      "kdu": "1005",
+      "eth": "0.004999275823999719"
+    },
+    "merchant": {
+      "kdu": "72",
+      "eth": "0"
+    }
+  }
+}

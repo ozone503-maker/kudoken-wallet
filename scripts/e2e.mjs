@@ -13,7 +13,7 @@ import { payWinner } from '../lib/payout.js';
 const env = Object.fromEntries(fs.readFileSync(new URL('../.env', import.meta.url), 'utf8').split('\n').filter(Boolean).map((l) => l.split('=')));
 const FORK = process.env.FORK === '1';
 const L1_RPC = process.env.L1_RPC || (FORK ? 'http://127.0.0.1:8545' : 'https://ethereum-sepolia-rpc.publicnode.com');
-const L2_RPC = process.env.L2_RPC || (FORK ? 'http://127.0.0.1:8546' : 'https://sepolia.base.org');
+const L2_RPC = process.env.L2_RPC || (FORK ? 'http://127.0.0.1:8546' : 'https://base-sepolia-rpc.publicnode.com');
 const L1_BRIDGE = '0xfd0Bf71F60660E2f608ed56e1659C450eB113120';
 const L2_FACTORY = '0x4200000000000000000000000000000000000012';
 const L2_BRIDGE = '0x4200000000000000000000000000000000000010';
@@ -57,9 +57,12 @@ if (FORK) {
   h = await createWalletClient({ account: L2_BRIDGE, chain: net.chain, transport: http(L2_RPC) }).writeContract({ address: l2Token, abi: mAbi, functionName: 'mint', args: [D.address, amt] });
   await rec(l2, 'l2_relay_mint_simulated', h);
 } else {
+  const startBlock = await l2.getBlockNumber();
   process.stdout.write('waiting for deposit to land on Base Sepolia');
   for (let i = 0; i < 90; i++) { if (await l2.readContract({ address: l2Token, abi: erc20Abi, functionName: 'balanceOf', args: [D.address] }) >= amt) break; process.stdout.write('.'); await new Promise((r) => setTimeout(r, 10000)); }
   console.log();
+  const mint = await l2.getLogs({ address: l2Token, event: parseAbi(['event Transfer(address indexed from, address indexed to, uint256 value)'])[0], args: { from: '0x0000000000000000000000000000000000000000', to: D.address }, fromBlock: startBlock - 50n });
+  out.txs.l2_bridge_arrival = mint[0]?.transactionHash; console.log('arrival', out.txs.l2_bridge_arrival);
 }
 out.l2BalanceAfterBridge = formatUnits(await l2.readContract({ address: l2Token, abi: erc20Abi, functionName: 'balanceOf', args: [D.address] }), 18);
 
